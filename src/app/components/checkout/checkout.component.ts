@@ -42,24 +42,36 @@ export class CheckoutComponent implements OnInit {
           [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')])
       }),
       shippingAddress: this.formBuilder.group({
-        street: [''],
-        city: [''],
-        state: [''],
-        country: [''],
-        zipCode: ['']
+        street: new FormControl('',
+          [Validators.required, Validators.minLength(2), Luv2ShopValidators.notOnlyWhiteSpace]),
+        city:  new FormControl('',
+          [Validators.required, Validators.minLength(2), Luv2ShopValidators.notOnlyWhiteSpace]),
+        state:  new FormControl('',
+          [Validators.required]),
+        country:  new FormControl('',
+          [Validators.required]),
+        zipCode:  new FormControl('',
+          [Validators.required, Validators.minLength(2), Luv2ShopValidators.notOnlyWhiteSpace])
       }),
       billingAddress: this.formBuilder.group({
-        street: [''],
-        city: [''],
-        state: [''],
-        country: [''],
-        zipCode: ['']
+        street: new FormControl('',
+          [Validators.required, Validators.minLength(2), Luv2ShopValidators.notOnlyWhiteSpace]),
+        city:  new FormControl('',
+          [Validators.required, Validators.minLength(2), Luv2ShopValidators.notOnlyWhiteSpace]),
+        state:  new FormControl('',
+          [Validators.required]),
+        country:  new FormControl('',
+          [Validators.required]),
+        zipCode:  new FormControl('',
+          [Validators.required, Validators.minLength(2), Luv2ShopValidators.notOnlyWhiteSpace])
       }),
       creditCard: this.formBuilder.group({
-        cardType: [''],
-        nameOnCard: [''],
-        cardNumber: [''],
-        securityCode: [''],
+        cardType: new FormControl('',
+          [Validators.required]),
+        nameOnCard:  new FormControl('',
+          [Validators.required, Validators.minLength(2), Luv2ShopValidators.notOnlyWhiteSpace]),
+        cardNumber: new FormControl('', [ Validators.required, Validators.pattern('^[0-9]{16}$')]),
+        securityCode: new FormControl('', [ Validators.required, Validators.pattern('^[0-9]{3}$')]),
         expirationMonth: [''],
         expirationYear: ['']
       }),
@@ -88,6 +100,27 @@ export class CheckoutComponent implements OnInit {
      get firstName() {return this.checkOutFormGroup.get('customer.firstName'); }
      get lastName() {return this.checkOutFormGroup.get('customer.lastName'); }
      get email() {return this.checkOutFormGroup.get('customer.email'); }
+
+     // get shipping address details from checkout form
+     get shippingAddressStreet() {return this.checkOutFormGroup.get('shippingAddress.street');}
+     get shippingAddressCity() {return this.checkOutFormGroup.get('shippingAddress.city');}
+     get shippingAddressState() {return this.checkOutFormGroup.get('shippingAddress.state');}
+     get shippingAddressPostalCode() {return this.checkOutFormGroup.get('shippingAddress.postalCode');}
+     get shippingAddressCountry() {return this.checkOutFormGroup.get('shippingAddress.country');}
+
+     // get billing address details from checkout form
+     get billingAddressStreet() {return this.checkOutFormGroup.get('billingAddress.street');}
+     get billingAddressCity() {return this.checkOutFormGroup.get('billingAddress.city');}
+     get billingAddressState() {return this.checkOutFormGroup.get('billingAddress.state');}
+     get billingAddressPostalCode() {return this.checkOutFormGroup.get('billingAddress.postalCode');}
+     get billingAddressCountry() {return this.checkOutFormGroup.get('billingAddress.country');}
+
+    // get Credit Card details from checkout form
+    get creditCardType() {return this.checkOutFormGroup.get('creditCard.cardType');}
+    get creditCardNameonCard() {return this.checkOutFormGroup.get('creditCard.nameonCard');}
+    get creditCardNumber() {return this.checkOutFormGroup.get('creditCard.cardNumber');}
+    get creditCardSecurityCode() {return this.checkOutFormGroup.get('creditCard.securityCode');}
+
 
   onSubmit() {
     console.log("Handling the submit button");
