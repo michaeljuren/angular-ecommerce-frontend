@@ -309,7 +309,7 @@
                 <div *ngIf="creditCardSecurityCode?.invalid && (creditCardSecurityCode?.dirty || creditCardSecurityCode?.touched)" class="alert alert-danger mt-1">
                   <div *ngIf="creditCardSecurityCode?.errors?.['required'] || creditCardSecurityCode?.errors?.['notOnlyWhiteSpace']">
                     Security code is required.</div>
-                  <div *ngIf="creditCardNumber?.errors?.['pattern']">
+                  <div *ngIf="creditCardSecurityCode?.errors?.['pattern']">
                     Security code must be 3 digits. </div>
                 </div>
 
