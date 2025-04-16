@@ -16,9 +16,15 @@ import { CartDetailsComponent } from './components/cart-details/cart-details.com
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginStatusComponent } from './components/login-status/login-status.component';
-import { AuthModule } from '@auth0/auth0-angular';
+import { AuthGuard, AuthModule } from '@auth0/auth0-angular';
+import { MembersPageComponent } from './components/members-page/members-page.component';
+import { AuthPathGuardService } from './services/auth-path-guard.service';
+import { NotAuthorizedComponent } from './components/not-authorized/not-authorized.component';
 
 const routes: Routes = [
+  {path: '401', component: NotAuthorizedComponent},
+  {path: 'members', component: MembersPageComponent, canActivate: [AuthPathGuardService]},
+  {path: 'login', component: LoginStatusComponent},
   {path: 'checkout', component: CheckoutComponent},
   {path: 'cart-details', component: CartDetailsComponent},
   {path: 'products/:id', component: ProductDetailsComponent},
@@ -40,7 +46,9 @@ const routes: Routes = [
     CartStatusComponent,
     CartDetailsComponent,
     CheckoutComponent,
-    LoginStatusComponent
+    LoginStatusComponent,
+    MembersPageComponent,
+    NotAuthorizedComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -58,7 +66,8 @@ const routes: Routes = [
   ],
   providers: [
     provideHttpClient(),
-    ProductService
+    ProductService,
+    AuthPathGuardService
   ],
   bootstrap: [AppComponent]
 })

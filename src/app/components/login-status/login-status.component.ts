@@ -29,15 +29,11 @@ export class LoginStatusComponent implements OnInit {
     if (this.authService.user$) {
       this.authService.user$.subscribe(
         (result) => {
-          this.userFullName = result?.name;
+          this.userFullName = result?.given_name;
           console.log
         }
       )
     }
-  }
-
-  logout() {
-    this.authService.logout();
   }
 
 }

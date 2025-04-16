@@ -3,10 +3,11 @@
     Welcome back {{ userFullName }}!
   </div>
 
+  <!--routerLink="/login" -->
+
   <button
     *ngIf="!(authService.isAuthenticated$ | async)"
     (click)="authService.loginWithPopup()"
-    routerLink="/login"
     class="security-btn"
   >
     Login
@@ -18,5 +19,13 @@
     class="security-btn"
   >
     Logout
+  </button>
+
+  <button
+    *ngIf="authService.isAuthenticated$ | async"
+    routerLink="/members"
+    class="security-btn ms-1"
+  >
+    Member
   </button>
 </div>
