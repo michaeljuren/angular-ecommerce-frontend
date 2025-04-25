@@ -20,8 +20,10 @@ import { AuthGuard, AuthModule } from '@auth0/auth0-angular';
 import { MembersPageComponent } from './components/members-page/members-page.component';
 import { AuthPathGuardService } from './services/auth-path-guard.service';
 import { NotAuthorizedComponent } from './components/not-authorized/not-authorized.component';
+import { OrderHistoryComponent } from './components/order-history/order-history.component';
 
 const routes: Routes = [
+  {path: 'order-history', component: OrderHistoryComponent, canActivate: [AuthPathGuardService]},
   {path: '401', component: NotAuthorizedComponent},
   {path: 'members', component: MembersPageComponent, canActivate: [AuthPathGuardService]},
   {path: 'login', component: LoginStatusComponent},
@@ -48,7 +50,8 @@ const routes: Routes = [
     CheckoutComponent,
     LoginStatusComponent,
     MembersPageComponent,
-    NotAuthorizedComponent
+    NotAuthorizedComponent,
+    OrderHistoryComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

@@ -12,6 +12,8 @@ export class LoginStatusComponent implements OnInit {
   isAuthenticated: boolean = false;
   userFullName: string | undefined;
 
+  storage: Storage = sessionStorage;
+
 
   constructor(public authService: AuthService) {}
 
@@ -30,6 +32,12 @@ export class LoginStatusComponent implements OnInit {
       this.authService.user$.subscribe(
         (result) => {
           this.userFullName = result?.given_name;
+
+          // retrieve email
+          const theEmail = result?.email;
+
+          // store in session storage
+          this.storage.setItem('userEmail', JSON.stringify(theEmail));
           console.log
         }
       )
