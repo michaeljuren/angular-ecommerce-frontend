@@ -23,25 +23,29 @@ export class LoginStatusComponent implements OnInit {
         this.isAuthenticated = result;
         console.log('user logged in')
         this.getUserDetails();
+
       }
     )
   }
 
   getUserDetails() {
-    if (this.authService.user$) {
-      this.authService.user$.subscribe(
-        (result) => {
-          this.userFullName = result?.given_name;
+    this.authService.user$.subscribe((result) => {
+      this.userFullName = result?.given_name;
 
-          // retrieve email
-          const theEmail = result?.email;
+      const theEmail = result?.email;
+      this.storage.setItem('userEmail', JSON.stringify(theEmail));
 
-          // store in session storage
-          this.storage.setItem('userEmail', JSON.stringify(theEmail));
-          console.log
+      // Get the token properly
+      this.authService.getAccessTokenSilently().subscribe({
+        next: (token) => {
+          this.storage.setItem('accessToken', token);
+        },
+        error: (err) => {
+          console.error('Error getting access token:', err);
         }
-      )
-    }
+      });
+
+    });
   }
 
 }

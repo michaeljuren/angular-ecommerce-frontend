@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
-import { provideHttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ProductService } from './services/product.service';
 import { RouterModule, Routes } from '@angular/router';
 import { ProductCategoryMenuComponent } from './components/product-category-menu/product-category-menu.component';
@@ -16,11 +16,12 @@ import { CartDetailsComponent } from './components/cart-details/cart-details.com
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginStatusComponent } from './components/login-status/login-status.component';
-import { AuthGuard, AuthModule } from '@auth0/auth0-angular';
+import { AuthModule } from '@auth0/auth0-angular';
 import { MembersPageComponent } from './components/members-page/members-page.component';
 import { AuthPathGuardService } from './services/auth-path-guard.service';
 import { NotAuthorizedComponent } from './components/not-authorized/not-authorized.component';
 import { OrderHistoryComponent } from './components/order-history/order-history.component';
+import { AuthInterceptor} from './services/auth-interceptor.service';
 
 const routes: Routes = [
   {path: 'order-history', component: OrderHistoryComponent, canActivate: [AuthPathGuardService]},
@@ -63,14 +64,18 @@ const routes: Routes = [
       domain:'dev-bjhyh431jlsdmw24.us.auth0.com',
       clientId:'qE4UYfmG08DNz7wTbUuiR6hUa8YS87VF',
       authorizationParams: {
-        redirect_uri: 'http://localhost:4200/login/callback'
+        redirect_uri: 'http://localhost:4200/login',
+        audience: 'https://my-api.test.com'
       }
     })
   ],
   providers: [
-    provideHttpClient(),
+    provideHttpClient(withInterceptorsFromDi()),
     ProductService,
-    AuthPathGuardService
+    AuthPathGuardService,
+    {provide: HTTP_INTERCEPTORS,
+     useClass: AuthInterceptor,
+     multi: true},
   ],
   bootstrap: [AppComponent]
 })

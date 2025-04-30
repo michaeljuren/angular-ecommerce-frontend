@@ -7,11 +7,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrl: './not-authorized.component.css'
 })
 export class NotAuthorizedComponent  {
- // showPopup = true;
 
-  //closeLoginPopup() {
-  //  console.log('close popup');
- //   this.showPopup = false;
- // }
 
 }
