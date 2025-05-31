@@ -2,6 +2,7 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/c
 import { Injectable } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 import { Observable} from 'rxjs';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,8 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
-    const secureEndpoints = ['http://localhost:8080/api/orders'];
+    const theEndpoint = environment.luv2shopApiUrl + '/orders';
+    const secureEndpoints = [theEndpoint];
 
     const isSecure = secureEndpoints.some(url => req.url.includes(url));
     if (!isSecure) {
