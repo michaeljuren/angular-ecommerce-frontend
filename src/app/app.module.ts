@@ -61,8 +61,8 @@ const routes: Routes = [
     NgbModule,
     ReactiveFormsModule,
     AuthModule.forRoot({
-      domain:'dev-bjhyh431jlsdmw24.us.auth0.com',
-      clientId:'qE4UYfmG08DNz7wTbUuiR6hUa8YS87VF',
+      domain:'DOMAIN_NAME FROM AUTH0',
+      clientId:'CLIENT_ID FROM AUTH0',
       authorizationParams: {
         redirect_uri: 'http://localhost:4200/login',
         audience: 'https://my-api.test.com'
