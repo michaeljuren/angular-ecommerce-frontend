@@ -19,7 +19,6 @@ import { Purchase } from '../../common/purchase';
 })
 export class CheckoutComponent implements OnInit {
 
-
   checkOutFormGroup!: FormGroup;
   totalPrice: number = 0.00;
   totalQuantity: number = 0;
@@ -43,7 +42,15 @@ export class CheckoutComponent implements OnInit {
 
   ngOnInit(): void {
     // read users email address from browser storage
-    const theEmail = JSON.parse(this.storage.getItem('userEmail')!);
+  let theEmail = this.storage.getItem('userEmail') || '';
+
+  if (theEmail) {
+    try {
+      theEmail = JSON.parse(theEmail);
+    } catch (error) {
+      theEmail = '';
+    }
+  }
 
     this.checkOutFormGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
@@ -246,7 +253,7 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
-  handleMonthsandYears() {
+  handleMonthsAndYears() {
     const creditCardFormGroup = this.checkOutFormGroup.get('creditCard');
 
     const currentYear: number = new Date().getFullYear();

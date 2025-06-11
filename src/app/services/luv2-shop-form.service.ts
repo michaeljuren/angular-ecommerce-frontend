@@ -47,7 +47,8 @@ export class Luv2ShopFormService {
     let data: number[] = [];
     // start at current year and loop for next 10 years
     const startYear: number = new Date().getFullYear();
-    for (let theYear = startYear; theYear <= startYear + 10; theYear++) {
+    const endYear: number = startYear + 10;
+    for (let theYear = startYear; theYear <= endYear + 10; theYear++) {
       data.push(theYear);
     }
     return of(data);
